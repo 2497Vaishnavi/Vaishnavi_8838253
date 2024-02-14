@@ -7,3 +7,5 @@ def test_even_number():
 
 def test_odd_number():
     assert is_even(3) == False
+from even_numbers import is_odd
+     assert is_even(3) == False
