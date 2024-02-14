@@ -1,9 +1,9 @@
 # integration_test.py
 
-from login import login
+from even_numbers import is_even
 
-def test_successful_login():
-    assert login("user", "password") == True
+def test_even_number():
+    assert is_even(4) == True
 
-def test_failed_login():
-    assert login("invalid_user", "invalid_password") == False
+def test_odd_number():
+    assert is_even(3) == False
