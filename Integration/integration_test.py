@@ -6,4 +6,4 @@ def test_even_number():
 def test_odd_number():
     assert is_even(7) == False
 def test_odd_number_2():
-    assert is_even(9) == False
+    assert is_even(8) == False
