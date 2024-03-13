@@ -1,0 +1,80 @@
+// Setting up the webdriver
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
+
+IWebDriver driver = new ChromeDriver();
+
+// Navigating to the Shein Canada homepage
+driver.Navigate().GoToUrl("https://ca.shein.com/");
+
+// Maximizing the window
+driver.Manage().Window.Maximize();
+
+// Wait for the page to load
+Thread.Sleep(5000);
+try
+{
+    IWebElement dialogBoxCloseButton = driver.FindElement(By.ClassName("icon-close"));
+    dialogBoxCloseButton.Click();
+}
+catch (Exception ex)
+{
+}
+// Dialog box not found, continue without dismissing
+Thread.Sleep(5000);
+
+// Searching for men's fashion
+driver.FindElement(By.ClassName("header-search-input")).SendKeys("men fashion");
+driver.FindElement(By.ClassName("suiiconfont-critical")).Click();
+
+// Wait for the search results to load
+Thread.Sleep(5000);
+
+// Selecting an item
+driver.FindElement(By.ClassName("goods-title-link--jump")).Click();
+
+// Wait for the product page to load
+Thread.Sleep(5000);
+
+// Switch to the new tab
+driver.SwitchTo().Window(driver.WindowHandles.Last());
+
+// Selecting a size (assuming size selection is necessary)
+IWebElement element = driver.FindElement(By.XPath("//*[@id=\"goods-detail-v3\"]/div/div[1]/div/div[2]/div[2]/div/div[2]/div[2]/div[2]/span[2]/div/p"));
+element.Click();
+
+// Wait for the size to be selected
+Thread.Sleep(2000);
+// Find the element by its ID
+IWebElement popOverElement = driver.FindElement(By.Id("sui-to-body-container"));
+
+// Execute JavaScript to hide the element
+((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.display = 'none';", popOverElement);
+
+// Switch to the iframe if the element is within it
+driver.SwitchTo().DefaultContent();
+
+Thread.Sleep(2000);
+
+// Adding the item to cart
+driver.FindElement(By.ClassName("product-intro__add-btn")).Click();
+
+// Wait for the item to be added to cart
+Thread.Sleep(10000);
+
+// Viewing the cart
+driver.FindElement(By.ClassName("sui_icon_nav_cart_24px")).Click();
+
+// Wait for the cart page to load
+Thread.Sleep(5000);
+
+// Pressing checkout
+driver.FindElement(By.ClassName("check-btn")).Click();
+
+// Wait for the checkout process to initiate
+Thread.Sleep(5000);
+
+// Closing the webdriver
+driver.Quit();
